@@ -3,7 +3,6 @@
 namespace App\Domain\Services;
 
 use App\Domain\Contracts\AuthRepositoryInterface;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class AuthService

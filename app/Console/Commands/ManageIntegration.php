@@ -41,6 +41,7 @@ class ManageIntegration extends Command
     {
         if (! $this->authService->checkAuthentication($data)) {
             $this->error('Email or password is wrong');
+
             return;
         }
 
@@ -61,6 +62,7 @@ class ManageIntegration extends Command
 
         if (! $this->authService->checkAuthentication($data)) {
             $this->error('Email or password is wrong');
+
             return;
         }
 
