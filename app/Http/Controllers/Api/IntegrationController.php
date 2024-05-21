@@ -31,7 +31,7 @@ class IntegrationController extends Controller
         $integration = $this->integrationService->create($data);
 
         return response()->json([
-            'message' => 'Integration saved',
+            'message' => 'Integration created',
             'data' => $integration,
         ], 201);
     }
