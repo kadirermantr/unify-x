@@ -19,15 +19,10 @@ class IntegrationController extends Controller
 
     public function store(IntegrationStoreRequest $request): JsonResponse
     {
-        $username = $request->input('username');
-        $password = $request->input('password');
+        $authResponse = $this->checkAuthentication($request);
 
-        if ($username && $password) {
-            if (! $this->authService->authenticate($username, $password)) {
-                return response()->json([
-                    'error' => 'Email or password is wrong',
-                ], 401);
-            }
+        if ($authResponse !== true) {
+            return $authResponse;
         }
 
         $data = $request->validated();
@@ -41,6 +36,12 @@ class IntegrationController extends Controller
 
     public function update(IntegrationStoreRequest $request, Integration $integration): JsonResponse
     {
+        $authResponse = $this->checkAuthentication($request);
+
+        if ($authResponse !== true) {
+            return $authResponse;
+        }
+
         $this->integrationService->update($integration, $request->validated());
 
         return response()->json([
@@ -55,5 +56,21 @@ class IntegrationController extends Controller
         return response()->json([
             'message' => 'Integration deleted',
         ]);
+    }
+
+    private function checkAuthentication($request): true|JsonResponse
+    {
+        $username = $request->input('username');
+        $password = $request->input('password');
+
+        if ($username && $password) {
+            if (! $this->authService->authenticate($username, $password)) {
+                return response()->json([
+                    'error' => 'Email or password is wrong',
+                ], 401);
+            }
+        }
+
+        return true;
     }
 }
