@@ -23,13 +23,10 @@ class AuthService
         return Auth::attempt($credentials);
     }
 
-    public function checkAuthentication($request): bool
+    public function checkAuthentication($data): bool
     {
-        $username = $request->input('username');
-        $password = $request->input('password');
-
-        if ($username && $password) {
-            if (! $this->authenticate($username, $password)) {
+        if ($data['username'] && $data['password']) {
+            if (! $this->authenticate($data['username'], $data['password'])) {
                 return false;
             }
         }
