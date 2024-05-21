@@ -17,6 +17,11 @@ class IntegrationService
         return $this->repository->create($data);
     }
 
+    public function find(int $id)
+    {
+        return $this->repository->find($id);
+    }
+
     public function update(Integration $integration, array $data)
     {
         return $this->repository->update($integration, $data);

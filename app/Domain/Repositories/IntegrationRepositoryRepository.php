@@ -12,6 +12,11 @@ class IntegrationRepositoryRepository implements IntegrationRepositoryInterface
         return Integration::create($data);
     }
 
+    public function find(int $id)
+    {
+        return Integration::find($id);
+    }
+
     public function update(Integration $integration, array $data): bool
     {
         return $integration->update($data);
