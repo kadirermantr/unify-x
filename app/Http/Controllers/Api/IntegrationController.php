@@ -19,10 +19,15 @@ class IntegrationController extends Controller
 
     public function store(IntegrationStoreRequest $request): JsonResponse
     {
-        if (! $this->authService->authenticate($request->input('username'), $request->input('password'))) {
-            return response()->json([
-                'error' => 'Email or password is wrong',
-            ], 401);
+        $username = $request->input('username');
+        $password = $request->input('password');
+
+        if ($username && $password) {
+            if (! $this->authService->authenticate($username, $password)) {
+                return response()->json([
+                    'error' => 'Email or password is wrong',
+                ], 401);
+            }
         }
 
         $data = $request->validated();
