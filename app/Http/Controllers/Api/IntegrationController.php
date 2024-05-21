@@ -22,7 +22,9 @@ class IntegrationController extends Controller
         $authResponse = $this->authService->checkAuthentication($request);
 
         if ($authResponse !== true) {
-            return $authResponse;
+            return response()->json([
+                'error' => 'Email or password is wrong',
+            ], 401);
         }
 
         $data = $request->validated();
@@ -39,7 +41,9 @@ class IntegrationController extends Controller
         $authResponse = $this->authService->checkAuthentication($request);
 
         if ($authResponse !== true) {
-            return $authResponse;
+            return response()->json([
+                'error' => 'Email or password is wrong',
+            ], 401);
         }
 
         $this->integrationService->update($integration, $request->validated());

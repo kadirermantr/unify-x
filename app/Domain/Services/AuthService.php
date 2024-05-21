@@ -23,16 +23,14 @@ class AuthService
         return Auth::attempt($credentials);
     }
 
-    public function checkAuthentication($request): true|JsonResponse
+    public function checkAuthentication($request): bool
     {
         $username = $request->input('username');
         $password = $request->input('password');
 
         if ($username && $password) {
             if (! $this->authenticate($username, $password)) {
-                return response()->json([
-                    'error' => 'Email or password is wrong',
-                ], 401);
+                return false;
             }
         }
 
