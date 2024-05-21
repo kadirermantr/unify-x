@@ -3,6 +3,7 @@
 namespace App\Domain\Services;
 
 use App\Domain\Contracts\AuthRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 class AuthService
@@ -20,6 +21,22 @@ class AuthService
         ];
 
         return Auth::attempt($credentials);
+    }
+
+    public function checkAuthentication($request): true|JsonResponse
+    {
+        $username = $request->input('username');
+        $password = $request->input('password');
+
+        if ($username && $password) {
+            if (! $this->authenticate($username, $password)) {
+                return response()->json([
+                    'error' => 'Email or password is wrong',
+                ], 401);
+            }
+        }
+
+        return true;
     }
 
     public function create(array $data)
